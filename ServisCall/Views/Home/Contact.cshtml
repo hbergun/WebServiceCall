@@ -1,8 +1,10 @@
-﻿@{
+﻿@model Newtonsoft.Json.Linq.JArray
+@{
     ViewBag.Title = "Contact";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
+<h1>@Model[0]["carID"]</h1>
 
 <address>
     One Microsoft Way<br />

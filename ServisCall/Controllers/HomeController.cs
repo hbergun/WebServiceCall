@@ -25,7 +25,7 @@ namespace ServisCall.Controllers
             {
                 client.BaseAddress = new Uri("http://165.22.91.48/api/"); //Fix
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); //Fix
-                HttpResponseMessage response = client.GetAsync("car/getcar?id=8").Result; 
+                HttpResponseMessage response = client.GetAsync("car/getcars?id=8").Result; 
                 //End Point Name https://localhost:44300/car/getcars Query String Example bla bla car/getcars?blabla
                 if (response.IsSuccessStatusCode)
                 {
@@ -43,11 +43,26 @@ namespace ServisCall.Controllers
             //Is Poss ? Diff Exp
         }
 
-        public ActionResult Contact()
+        public ActionResult Contact() //For JSON LIST
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            using (HttpClient client = new HttpClient()) //Fix
+            {
+                client.BaseAddress = new Uri("http://165.22.91.48/api/"); //Fix
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); //Fix
+                HttpResponseMessage response = client.GetAsync("car/getcars?id=2").Result;
+                //End Point Name https://localhost:44300/car/getcars Query String Example bla bla car/getcars?blabla
+                if (response.IsSuccessStatusCode)
+                {
+                    var model = response.Content.ReadAsAsync<JArray>().Result;
+                    return View(model);
+                }
+                else
+                {
+                    //Error Bla Bla Veri Gelmezse Gibisine Yada Status Code Uymazsa  
+                    return View();
+                }
+            }
+            //Is Poss ? Diff Exp
         }
     }
 }
